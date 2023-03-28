@@ -1,0 +1,50 @@
+public class Cine {
+
+    // Enumeración con los tipos de salas
+    public enum TipoSala {
+        DINAMIX, TRES_D, DOS_D
+    }
+
+    // Función para calcular el precio de las boletas
+    public static int calcularPrecio(TipoSala tipoSala, int numBoletas, int hora, boolean esReserva, boolean esTarjetaCine) {
+        int precioBase = 0;
+        switch (tipoSala) {
+            case DINAMIX:
+                precioBase = 18800;
+                break;
+            case TRES_D:
+                precioBase = 15500;
+                break;
+            case DOS_D:
+                precioBase = 11300;
+                break;
+        }
+        int precio = precioBase;
+        if (numBoletas >= 3 && numBoletas <= 5) {
+            precio -= 1000;
+        } else if (numBoletas >= 6) {
+            precio -= 2000;
+        }
+        if (hora >= 13 && hora <= 16) {
+            precio -= 2000;
+        }
+        if (esReserva) {
+            precio += 2000;
+        }
+        if (!esTarjetaCine) {
+            precio += 1000;
+        }
+        return precio * numBoletas;
+    }
+
+    // Ejemplo de uso de la función
+    public static void main(String[] args) {
+        TipoSala tipoSala = TipoSala.DINAMIX;
+        int numBoletas = 4;
+        int hora = 15;
+        boolean esReserva = true;
+        boolean esTarjetaCine = true;
+        int precio = calcularPrecio(tipoSala, numBoletas, hora, esReserva, esTarjetaCine);
+        System.out.println("El precio total de las boletas es: " + precio + " pesos.");
+    }
+}
